@@ -1,0 +1,132 @@
+header {
+	background-color: darken($defaultColor, 25%);
+	min-height: 50px;
+	line-height: 50px;
+	position: fixed;
+	opacity: .6;
+	width: 100%;
+	z-index: 1;
+	#mobMenu {
+		display: none;
+	}
+	h1 {
+		float: right;
+		font-size: 25px;
+		font-weight: bold;
+		text-transform: uppercase;
+		letter-spacing: 4px;
+	}
+	ul {
+		width: 100%;
+	}
+	li {
+		float: left;
+		width: (100% / 7);
+		text-align: center;
+		@include mediaQuery(767px) {
+			width: 100%;
+		}
+	}
+	nav a {
+		font-size: 18px;
+		color: $whiteColor;
+		position: relative;
+		&:before,
+		&:after {
+			content: "";
+			position: absolute;
+			background: $secondaryColor;
+			height: 2px;
+			left: 0;
+			bottom: 0;
+			right: 100%;
+			@include transition(all .3s ease-in-out 0s);
+		}
+		&:after {
+			top: 0;
+			right: 0;
+			left: 100%;
+		}
+		&:hover {
+			color: $secondaryColor;
+			@include transition(all .3s ease-in-out 0s);
+			&:before {
+				right: 0;
+			}
+			&:after {
+				left: 0;
+			}
+		}
+		transition: all .7s ease-in-out 0s;
+	}
+	a.nav-active {
+		border-top: 2px solid $secondaryColor;
+		border-bottom: 2px solid $secondaryColor;
+		color: $secondaryColor;
+		@include animation(navAnimation, 1s, 0s);
+		@keyframes navAnimation {
+			0% {left: 0; }
+			100% {left: 10%; transition: all .7s ease-in-out 0s;}
+		}
+		&:hover {
+			pointer-events: none;
+			cursor: default;
+		}
+	}
+	@include mediaQuery(767px) {
+		input[type="checkbox"]:checked ~ ul {
+			display: block;
+		}
+		.showMenu {
+			position: absolute;
+			top: 0;
+			left: 0;
+			background-color: $secondaryColor;
+			cursor: pointer;
+			width: 50px;
+			height: 50px;
+		}
+		.toggleNav dt {
+			position: absolute;
+			background-color: $whiteColor;
+			height: 3px;
+			width: 40px;
+			right: 0;
+			left: 0;
+			margin: auto;
+			@include transition(all .5s ease-in-out 0s);
+			&:nth-child(1) {
+				top: 15px;
+			}
+			&:nth-child(2) {
+				top: 25px;
+			}
+			&:nth-child(3) {
+				top: 35px;
+			}
+		}
+		input[type="checkbox"]:checked ~ .showMenu .toggleNav dt:nth-child(1) {
+			top: 25px;
+			transform: rotate(135deg);
+			background-color: $defaultColor;
+		}
+		input[type="checkbox"]:checked ~ .showMenu .toggleNav dt:nth-child(2) {
+			opacity: 0;
+		}
+		input[type="checkbox"]:checked ~ .showMenu .toggleNav dt:nth-child(3) {
+			top: 25px;
+			transform: rotate(-135deg);
+			background-color: $defaultColor;
+		}
+		ul {
+			display: none;
+		}
+		li {
+			margin-bottom: 5px;
+		}
+		a {
+			display: block;
+		}
+	}
+	@include clearFix();
+}
